@@ -27,8 +27,9 @@ const CONFIG = {
   ...(env.BET25_PASSWORD && { password: env.BET25_PASSWORD }),
   ...(env.SLACK_WEBHOOK_URL && { slackWebhook: env.SLACK_WEBHOOK_URL })
 };
-const DATA_DIR = env.DATA_DIR || DIR;
-fs.mkdirSync(DATA_DIR, { recursive: true });
+let DATA_DIR = env.DATA_DIR || DIR;
+try { fs.mkdirSync(DATA_DIR, { recursive: true }); fs.accessSync(DATA_DIR, fs.constants.W_OK); }
+catch (e) { console.error(`DATA_DIR ${DATA_DIR} not usable (${e.code}) - using ${DIR}`); DATA_DIR = DIR; }
 const BASELINE_FILE = path.join(DATA_DIR, "baseline.json");
 const STATE_FILE = path.join(DATA_DIR, "state.json");
 const SESSION_FILE = path.join(DATA_DIR, "session.json");
