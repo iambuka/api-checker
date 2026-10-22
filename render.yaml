@@ -2,16 +2,12 @@ services:
   - type: worker
     name: bet25-api-guard
     runtime: node
-    plan: starter # persistent disks need a paid plan
-    buildCommand: "true"
+    plan: starter
+    buildCommand: npm install
     startCommand: node worker.mjs
-    disk:
-      name: guard-data
-      mountPath: /var/data
-      sizeGB: 1
+    # No disk: baseline and session live on the instance's temporary filesystem and are rebuilt
+    # after each restart or deploy.
     envVars:
-      - key: DATA_DIR
-        value: /var/data
       - key: NODE_VERSION
         value: "24"
       - key: BET25_LOGIN
