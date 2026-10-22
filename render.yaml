@@ -1,0 +1,22 @@
+services:
+  - type: worker
+    name: bet25-api-guard
+    runtime: node
+    plan: starter # persistent disks need a paid plan
+    buildCommand: "true"
+    startCommand: node worker.mjs
+    disk:
+      name: guard-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: NODE_VERSION
+        value: "24"
+      - key: BET25_LOGIN
+        sync: false
+      - key: BET25_PASSWORD
+        sync: false
+      - key: SLACK_WEBHOOK_URL
+        sync: false

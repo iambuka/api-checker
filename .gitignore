@@ -1,0 +1,6 @@
+config.json
+session.json
+state.json
+baseline.json
+guard.log
+node_modules/
